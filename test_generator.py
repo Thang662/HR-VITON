@@ -15,6 +15,7 @@ from utils import *
 
 import torchgeometry as tgm
 from collections import OrderedDict
+from tqdm import tqdm
 
 def remove_overlap(seg_out, warped_cm):
     
@@ -113,7 +114,7 @@ def test(opt, test_loader, tocg, generator):
     num = 0
     iter_start_time = time.time()
     with torch.no_grad():
-        for inputs in test_loader.data_loader:
+        for inputs in tqdm(test_loader.data_loader):
 
             if opt.cuda :
                 pose_map = inputs['pose'].cuda()
@@ -233,7 +234,7 @@ def test(opt, test_loader, tocg, generator):
             save_images(output, unpaired_names, output_dir)
                 
             num += shape[0]
-            print(num)
+            # print(num)
 
     print(f"Test time {time.time() - iter_start_time}")
 
